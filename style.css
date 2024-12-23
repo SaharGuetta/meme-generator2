@@ -1,0 +1,45 @@
+*{
+    box-sizing: border-box;
+}
+
+.top-nav{
+    justify-content: space-between;
+    align-items: right;
+    padding: 0 20px;
+    background-color: #f4f4f4;
+    border-bottom: solid 1px #000;
+}
+
+.nav-buttons{
+    /* display: flex; */
+    justify-content: end;
+}
+
+.meme-container{
+    display: flex;
+    background-color: grey;
+    border-spacing: 0caps;
+}
+
+img{
+    width: 250px;
+    height: auto;
+    margin: 0%;
+    border-radius: 200px;
+    cursor: pointer;
+}
+.image-container label{
+    display: block;
+    text-align: center;
+    font-size: 20px;
+    font-weight: bold;
+    color: #fff;
+    background-color: #000;
+    background-size: contain;
+    padding: 10px;
+    cursor: pointer;
+}
+
+.hidden{
+    display: none;
+}
