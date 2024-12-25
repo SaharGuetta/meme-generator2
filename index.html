@@ -1,35 +1,51 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Sahar's Meme Generator</title>
-    <link rel="stylesheet" href="style.css">
-</head>
-<body onload="onInit()">
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body onload="onInit()">
+    <!-- Top Navigation -->
     <section class="top-nav">
-        <nav>
-            <h2>Meme Generator</h2>
-            <ul class="nav-buttons">
-                <button onclick="showGallery()">Gallery</button>
-                <button>Upload</button>
-            </ul>
-        </nav>
+      <nav>
+        <h2>Meme Generator</h2>
+        <ul class="nav-buttons">
+          <li><button onclick="showGallery()">Gallery</button></li>
+          <li>
+            <input type="file" id="imageUploader" style="display: none;" accept="image/*" onchange="onUploadImage(event)" />
+            <button onclick="document.getElementById('imageUploader').click()">Upload</button>
+        </li>
+        </ul>
+      </nav>
     </section>
+
+    <!-- Meme Gallery -->
     <section class="meme-container">
-        <div class="image-container">
-            <label class="upload-label">Upload</label>
-            <img onclick="onImageClick()" >
-        </div>
+      <div class="image-container" style="display: block">
+        <!-- Images are dynamically inserted here -->
+      </div>
     </section>
+
+    <!-- Meme Editor -->
     <section class="editor-screen">
-        <canvas width="500" height="500"></canvas>
-        <br>
-        <input class="text-input" type="text" placeholder="Enter text here">
-        <br>
-        
-        <button onclick="addText()">Add Text</button>
+      <canvas width="500" height="500"></canvas>
+      <br />
+      <input class="text-input" type="text" placeholder="Enter text here" />
+      <br />
+      <button class="add-text-btn" onclick="addText()">Add Text</button>
+      <button class="font-size-input" onclick="fontSizeChange()">A+</button>
+      <button class="font-size-input" onclick="onResizeText()">A-</button>
+      <button class="delete-text-btn" onclick="onDeleteCanvasText()">🗑️</button>
+      <input class="color-input" type="color" onchange="colorChange()" />
+      <br />
+      <a onclick="downloadMeme(this)" href="#" class="download-btn"
+        >Download Meme</a
+      >
     </section>
+
+    <footer class="footer">By Sahar Guetta</footer>
     <script src="memesjs.js"></script>
-</body>
+  </body>
 </html>

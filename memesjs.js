@@ -1,60 +1,141 @@
-'use strict';
+"use strict";
+
 const gImageList = [];
-const elEditorScreen = document.querySelector('.editor-screen');
-var gctx;
+const elCanvas = document.querySelector("canvas");
+const elEditorScreen = document.querySelector(".editor-screen");
+const elImageContainer = document.querySelector(".image-container");
+const elTextInput = document.querySelector(".text-input");
+const elFontSize = document.querySelector(".font-size-input");
+const elColorPicker = document.querySelector(".color-input");
+let gTexts = [];
+let gctx;
+let selectedImageSrc = null;
 
 function onInit() {
-    const canvas = document.querySelector("canvas");
-    gctx = canvas.getContext("2d");
-    elEditorScreen.style.display = "none";
-
-    setImageList();
+  gctx = elCanvas.getContext("2d");
+  elEditorScreen.style.display = "none";
+  setImageList();
+  addEventListeners();
 }
 
 function setImageList() {
-    const imageContainer = document.querySelector(".image-container");
-    if (!imageContainer) return;
+  if (!elImageContainer) return;
 
-    for (let i = 1; i <= 18; i++) {
-        gImageList.push({ src: `meme-imgs (square)/${i}.jpg`, alt: `photo ${i}` });
-    }
+  for (let i = 1; i <= 18; i++) {
+    gImageList.push({ src: `meme-imgs (square)/${i}.jpg`, alt: `photo ${i}` });
+  }
 
-    gImageList.forEach((image, idx) => {
-        const imgElement = document.createElement("img");
-        imgElement.onclick = () => {
-            onImageClick(idx);
-        };
-        imgElement.src = image.src;
-        imgElement.alt = image.alt;
-        imgElement.classList.add("meme-image");
-        
-        imageContainer.appendChild(imgElement);
-    });
+  gImageList.forEach((image, idx) => {
+    const imgElement = document.createElement("img");
+    imgElement.onclick = () => onImageClick(idx);
+    imgElement.src = image.src;
+    imgElement.alt = image.alt;
+    imgElement.classList.add("meme-image");
+    elImageContainer.appendChild(imgElement);
+  });
 }
 
 function onImageClick(idx) {
-    elEditorScreen.style.display = "block";
-    const elImageContainer = document.querySelector(".image-container");
-    elImageContainer.style.display = "none";
-    const img = new Image();
-    img.src = gImageList[idx].src;
-    img.onload = () => {
-        gctx.drawImage(img, 0, 0, gctx.canvas.width, gctx.canvas.height);
-    };
+  selectedImageSrc = gImageList[idx].src;
+  elEditorScreen.style.display = "block";
+  elImageContainer.style.display = "none";
+  const img = new Image();
+  img.src = selectedImageSrc;
+  img.onload = () => {
+    gctx.drawImage(img, 0, 0, elCanvas.width, elCanvas.height);
+  };
 }
 
 function showGallery() {
-        elEditorScreen.style.display = "none";
-        const elImageContainer = document.querySelector(".image-container");
-        elImageContainer.style.display = "block";
-        elImageContainer.innerHTML = ""; 
-        setImageList(); 
-    }
+  elEditorScreen.style.display = "none";
+  elImageContainer.style.display = "block";
+  gctx.clearRect(0, 0, elCanvas.width, elCanvas.height);
+}
 
-    function addText() {
-        const elTextInput = document.querySelector(".text-input");
-        const text = elTextInput.value;
-        gctx.font = "30px Arial";
-        gctx.fillStyle = "white";
-        gctx.fillText(text, 50, 50);
-    }
+function addText() {
+  const text = elTextInput.value;
+  const fontSize = elFontSize.value ||40 ;
+  const color = elColorPicker.value || "white";
+
+  const textObj = {
+    text,
+    x: 50,
+    y: 50,
+    fontSize,
+    color,
+  };
+
+  gTexts.push(textObj);
+  redrawCanvas();
+}
+
+function redrawCanvas() {
+  gctx.clearRect(0, 0, elCanvas.width, elCanvas.height);
+
+  if (selectedImageSrc) {
+    const img = new Image();
+    img.src = selectedImageSrc;
+    img.onload = () => {
+      gctx.drawImage(img, 0, 0, elCanvas.width, elCanvas.height);
+      drawTexts();
+    };
+  } else {
+    drawTexts();
+  }
+}
+
+function drawTexts() {
+  gTexts.forEach((textObj) => {
+    gctx.font = `${textObj.fontSize}px Arial`;
+    gctx.fillStyle = textObj.color;
+    gctx.fillText(textObj.text, textObj.x, textObj.y);
+  });
+}
+
+function downloadMeme(elLink) {
+  const data = elCanvas.toDataURL();
+  elLink.href = data;
+  elLink.download = "my-meme.jpg";
+}
+
+function onUploadImage(ev) {
+  const file = ev.target.files[0];
+  if (!file) return;
+
+  const reader = new FileReader();
+  reader.onload = function (event) {
+    const img = new Image();
+    img.src = event.target.result;
+    img.onload = () => {
+      selectedImageSrc = img.src;
+      gctx.clearRect(0, 0, elCanvas.width, elCanvas.height);
+      gctx.drawImage(img, 0, 0, elCanvas.width, elCanvas.height);
+    };
+  };
+  reader.readAsDataURL(file);
+}
+
+function addEventListeners() {
+  elTextInput.addEventListener("input", () => redrawCanvas());
+  elFontSize.addEventListener("input", () => redrawCanvas());
+  elColorPicker.addEventListener("input", () => redrawCanvas());
+}
+
+function onDeleteCanvasText(){
+  gctx.fillStyle = 'white';   
+  gctx.fillRect(0, 0, elCanvas.width, elCanvas.height);
+  gTexts = [];  
+  redrawCanvas();     
+}
+
+function colorChange(){
+  const color = elColorPicker.value || "white";
+  gctx.fillStyle = color;
+  redrawCanvas();
+}
+
+function fontSizeChange(){
+  const fontSize = elFontSize.value + 10;
+  gctx.fontSize = fontSize;
+  redrawCanvas();
+}

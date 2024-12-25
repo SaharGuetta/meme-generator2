@@ -10,6 +10,12 @@
     border-bottom: solid 1px #000;
 }
 
+.top-nav h2{
+    font-size: 30px;
+    color: #000;
+    background-color: grey;
+    margin: 0;
+}
 .nav-buttons{
     /* display: flex; */
     justify-content: end;
@@ -42,4 +48,37 @@ img{
 
 .hidden{
     display: none;
+}
+
+.editor-screen button{
+    padding: 10px;
+    border-radius: 30px;
+}
+.editor-screen input{
+
+    border-radius: 10px;
+    border: solid 1px #000;
+}
+.footer{
+    text-align: center;
+}
+canvas{
+    padding-left: 40%;
+    border-radius: 10px;
+}
+.download-btn{
+    margin-left: 39%;
+    border-radius: 30px;
+    padding: 10px;
+    cursor: pointer;
+}
+.text-input{
+   margin-left: 40%;
+    border-radius: 30px;
+}
+
+.add-text-btn{
+    margin-left: 40%;
+    border-radius: 30px;
+    cursor: pointer;
 }
