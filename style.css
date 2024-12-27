@@ -1,84 +1,129 @@
-*{
+* {
     box-sizing: border-box;
-}
-
-.top-nav{
-    justify-content: space-between;
-    align-items: right;
-    padding: 0 20px;
-    background-color: #f4f4f4;
-    border-bottom: solid 1px #000;
-}
-
-.top-nav h2{
-    font-size: 30px;
-    color: #000;
-    background-color: grey;
     margin: 0;
-}
-.nav-buttons{
-    /* display: flex; */
-    justify-content: end;
+    padding: 0;
+    font-family: 'Arial', sans-serif;
 }
 
-.meme-container{
+body {
+    background-color: #f9f9f9;
+    color: #333;
+    line-height: 1.6;
+}
+
+.top-nav {
     display: flex;
-    background-color: grey;
-    border-spacing: 0caps;
-}
-
-img{
-    width: 250px;
-    height: auto;
-    margin: 0%;
-    border-radius: 200px;
-    cursor: pointer;
-}
-.image-container label{
-    display: block;
-    text-align: center;
-    font-size: 20px;
-    font-weight: bold;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 20px;
+    background-color: #333;
     color: #fff;
-    background-color: #000;
-    background-size: contain;
-    padding: 10px;
+}
+
+.top-nav h2 {
+    font-size: 24px;
+    font-weight: bold;
+}
+
+.nav-buttons {
+    display: flex;
+    gap: 10px;
+}
+
+.nav-buttons button {
+    background-color: #007BFF;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    padding: 8px 12px;
     cursor: pointer;
+    transition: background-color 0.3s ease;
 }
 
-.hidden{
-    display: none;
+.nav-buttons button:hover {
+    background-color: #0056b3;
 }
 
-.editor-screen button{
-    padding: 10px;
-    border-radius: 30px;
+.meme-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    padding: 20px;
+    gap: 15px;
+    background-color: #f4f4f4;
 }
-.editor-screen input{
 
+.meme-container img {
+    width: 200px;
+    height: auto;
     border-radius: 10px;
-    border: solid 1px #000;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    cursor: pointer;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
-.footer{
+
+.meme-container img:hover {
+    transform: scale(1.05);
+    box-shadow: 0 6px 10px rgba(0, 0, 0, 0.2);
+}
+
+.editor-screen {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+    background-color: #fff;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+    max-width: 600px;
+    margin: 20px auto;
+}
+
+canvas {
+    border: 2px solid #ccc;
+    border-radius: 10px;
+    margin-bottom: 15px;
+}
+
+.editor-screen input,
+.editor-screen button {
+    margin: 10px 0;
+}
+
+.text-input,
+.color-input {
+    width: 80%;
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+}
+
+.add-text-btn,
+.font-size-input,
+.delete-text-btn,
+.download-btn {
+    padding: 10px 15px;
+    border-radius: 5px;
+    border: none;
+    background-color: #007BFF;
+    color: #fff;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    margin: 5px;
+}
+
+.add-text-btn:hover,
+.font-size-input:hover,
+.delete-text-btn:hover,
+.download-btn:hover {
+    background-color: #0056b3;
+}
+
+.footer {
     text-align: center;
-}
-canvas{
-    padding-left: 40%;
-    border-radius: 10px;
-}
-.download-btn{
-    margin-left: 39%;
-    border-radius: 30px;
-    padding: 10px;
-    cursor: pointer;
-}
-.text-input{
-   margin-left: 40%;
-    border-radius: 30px;
-}
-
-.add-text-btn{
-    margin-left: 40%;
-    border-radius: 30px;
-    cursor: pointer;
+    padding: 10px 0;
+    background-color: #333;
+    color: #fff;
+    font-size: 14px;
+    margin-top: 20px;
 }

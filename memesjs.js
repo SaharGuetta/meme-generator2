@@ -7,6 +7,14 @@ const elImageContainer = document.querySelector(".image-container");
 const elTextInput = document.querySelector(".text-input");
 const elFontSize = document.querySelector(".font-size-input");
 const elColorPicker = document.querySelector(".color-input");
+let textObj = {
+  text: "",
+  x: 50,
+  y: 50,
+  fontSize: 40,
+  color: "white",
+};
+
 let gTexts = [];
 let gctx;
 let selectedImageSrc = null;
@@ -54,7 +62,7 @@ function showGallery() {
 
 function addText() {
   const text = elTextInput.value;
-  const fontSize = elFontSize.value ||40 ;
+  const fontSize = 40;
   const color = elColorPicker.value || "white";
 
   const textObj = {
@@ -66,22 +74,24 @@ function addText() {
   };
 
   gTexts.push(textObj);
-  redrawCanvas();
+  renderMeme();
 }
 
 function redrawCanvas() {
   gctx.clearRect(0, 0, elCanvas.width, elCanvas.height);
 
-  if (selectedImageSrc) {
-    const img = new Image();
-    img.src = selectedImageSrc;
-    img.onload = () => {
-      gctx.drawImage(img, 0, 0, elCanvas.width, elCanvas.height);
-      drawTexts();
-    };
-  } else {
+  if (!selectedImageSrc) return;
+  const img = new Image();
+  img.src = selectedImageSrc;
+  img.onload = () => {
+    gctx.drawImage(img, 0, 0, elCanvas.width, elCanvas.height);
+  };
+}
+function renderMeme() {
+  redrawCanvas();
+  setTimeout(() => {
     drawTexts();
-  }
+  }, 30);
 }
 
 function drawTexts() {
@@ -121,21 +131,20 @@ function addEventListeners() {
   elColorPicker.addEventListener("input", () => redrawCanvas());
 }
 
-function onDeleteCanvasText(){
-  gctx.fillStyle = 'white';   
+function onDeleteCanvasText() {
+  gctx.fillStyle = "white";
   gctx.fillRect(0, 0, elCanvas.width, elCanvas.height);
-  gTexts = [];  
-  redrawCanvas();     
+  gTexts = [];
+  redrawCanvas();
 }
 
-function colorChange(){
+function colorChange() {
   const color = elColorPicker.value || "white";
-  gctx.fillStyle = color;
-  redrawCanvas();
+  gTexts[0].color = color;
+  renderMeme();
 }
 
-function fontSizeChange(){
-  const fontSize = elFontSize.value + 10;
-  gctx.fontSize = fontSize;
-  redrawCanvas();
+function fontSizeChange(num) {
+  gTexts[0].fontSize += num;
+  renderMeme();
 }

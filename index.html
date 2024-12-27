@@ -14,9 +14,17 @@
         <ul class="nav-buttons">
           <li><button onclick="showGallery()">Gallery</button></li>
           <li>
-            <input type="file" id="imageUploader" style="display: none;" accept="image/*" onchange="onUploadImage(event)" />
-            <button onclick="document.getElementById('imageUploader').click()">Upload</button>
-        </li>
+            <input
+              type="file"
+              id="imageUploader"
+              style="display: none"
+              accept="image/*"
+              onchange="onUploadImage(event)"
+            />
+            <button onclick="document.getElementById('imageUploader').click()">
+              Upload
+            </button>
+          </li>
         </ul>
       </nav>
     </section>
@@ -35,10 +43,10 @@
       <input class="text-input" type="text" placeholder="Enter text here" />
       <br />
       <button class="add-text-btn" onclick="addText()">Add Text</button>
-      <button class="font-size-input" onclick="fontSizeChange()">A+</button>
-      <button class="font-size-input" onclick="onResizeText()">A-</button>
+      <button class="font-size-input" onclick="fontSizeChange(10)">A+</button>
+      <button class="font-size-input" onclick="fontSizeChange(-10)">A-</button>
       <button class="delete-text-btn" onclick="onDeleteCanvasText()">🗑️</button>
-      <input class="color-input" type="color" onchange="colorChange()" />
+      <input class="color-input" type="color" oninput="colorChange()" />
       <br />
       <a onclick="downloadMeme(this)" href="#" class="download-btn"
         >Download Meme</a
